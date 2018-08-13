@@ -1,3 +1,4 @@
+import math
 ### Python conversion of the javascript a2c function
 ### Original function at: https://github.com/fontello/svgpath
 
