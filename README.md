@@ -1,5 +1,6 @@
 # arc-to-curve-python-conversion
 conversion of a2c javascript function from https://github.com/fontello/svgpath
+(this function converts an svg arc to a cubic curve)
 
 License
 (The MIT License, copied from the source)
