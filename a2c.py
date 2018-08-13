@@ -1,13 +1,10 @@
 ### Python conversion of the javascript a2c function
-### Originall function at: https://github.com/fontello/svgpath
+### Original function at: https://github.com/fontello/svgpath
 
-# Convert an arc to a sequence of cubic bézier curves
+# Convert an arc to a sequence of cubic bezier curves
 #
 
-import math
-
 TAU = math.pi * 2
-
 
 # eslint-disable space-infix-ops
 
@@ -106,11 +103,11 @@ def get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi):
     return [ cx, cy, theta1, delta_theta ]
 
 #
-# Approximate one unit arc segment with bézier curves,
+# Approximate one unit arc segment with bezier curves,
 # see http:#math.stackexchange.com/questions/873224
 #
 def approximate_unit_arc(theta1, delta_theta):
-    alpha = 4/3 * math.tan(delta_theta/4)
+    alpha = 4.0/3 * math.tan(delta_theta/4)
 
     x1 = math.cos(theta1)
     y1 = math.sin(theta1)
@@ -156,15 +153,16 @@ def a2c(x1, y1, x2, y2, fa, fs, rx, ry, phi):
     delta_theta = cc[3]
 
     # Split an arc to multiple segments, so each segment
-    # will be less than τ/4 (= 90°)
+    # will be less than 90
     #
-    segments = max(math.ceil(abs(delta_theta) / (TAU / 4)), 1)
+    segments = int(max(math.ceil(abs(delta_theta) / (TAU / 4)), 1))
     delta_theta /= segments
 
     for i in range(0, segments):
         result.append(approximate_unit_arc(theta1, delta_theta))
-        theta1 += delta_theta
 
+        theta1 += delta_theta
+        
     # We have a bezier approximation of a unit circle,
     # now need to transform back to the original ellipse
     #
@@ -192,4 +190,3 @@ def getMappedList(result, rx, ry, sin_phi, cos_phi, cc):
             curve.append(complex(elem[i + 0], elem[i + 1]))
         mappedList.append(curve)
     return mappedList
-
